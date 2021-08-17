@@ -43,7 +43,7 @@ function App() {
 		    <input className="toggle-all" type="checkbox" />
 		    <label htmlFor="toggle-all" onClick={()=>{
           setListe(
-          liste.map(el => el.tamamlandi ===false ? {...el, tamamlandi: !el.tamamlandi} : el
+          liste.map(el => el.tamamlandi === false ? {...el, tamamlandi: !el.tamamlandi} : el
            ))}}>
 			  Mark all as complete
 		    </label>
