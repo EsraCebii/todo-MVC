@@ -41,7 +41,10 @@ function App() {
 
 	    <section className="main">
 		    <input className="toggle-all" type="checkbox" />
-		    <label htmlFor="toggle-all">
+		    <label htmlFor="toggle-all" onClick={()=>{
+          setListe(
+          liste.map(el => el.tamamlandi ===false ? {...el, tamamlandi: !el.tamamlandi} : el
+           ))}}>
 			  Mark all as complete
 		    </label>
 		    <ul className="todo-list">
@@ -51,11 +54,11 @@ function App() {
                 <input className="toggle" type="checkbox" onClick={()=>{
                   setListe(
                     liste.map(el => el.id=== item.id ? {...el, tamamlandi: !el.tamamlandi} : el
-                      ))}
+                    ))}
                   } />
 					      <label>{item.baslik}</label>
 					      <button className="destroy" onClick={(e)=> {
-                  setListe(liste.filter(el=> el.id !==item.id))} }/>
+                  setListe(liste.filter(el=> el.id !==item.id ))} }/>
               </div>
             </li>
           ))}
@@ -64,7 +67,7 @@ function App() {
       <footer className="footer">
         <span className="todo-count">
           <strong>{liste.length} </strong>
-        items left
+          items left
         </span>
 
         <ul className="filters">
