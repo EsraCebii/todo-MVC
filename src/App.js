@@ -3,15 +3,17 @@ import React,{ useState, useMemo}from 'react';
 import './App.css';
 
 const INITIAL_STATE = [
-  { id: 1, baslik: "Learn React", tamamlandi: false },
-  { id: 2, baslik: "Learn JS", tamamlandi: false }
+  { id: 1, baslik: "Learn JS", tamamlandi: false, className:"" },
+  { id: 2, baslik: "Learn React", tamamlandi: false, className:"" },
+  { id: 3, baslik: "Learn Redux", tamamlandi: false, className:"" }
+  
 ];
 
 function App() {
   const [liste, setListe] = useState(INITIAL_STATE); // todo elemanları
   const [yeniBaslik, setYeniBaslik]=useState("");
   const [filter, setFilter] = useState(null) // uygulamak istediğim filtreler null(all), active, completed
-  console.log("YENİ BAŞLIK:", yeniBaslik);
+  const[checkAll, setCheckAll]=useState(false);
 
   const click = (id) => {
     setListe(
@@ -29,8 +31,14 @@ function App() {
     }
   },[liste,filter]);
 
-
-
+  const toggleAll = () => {
+    const yeniListe =[...liste]
+    yeniListe.forEach(item =>{
+      item.tamamlandi = !checkAll
+    })
+    setListe(yeniListe)
+    setCheckAll(!checkAll)
+  }
 
   return (
     <section className="todoapp">
@@ -60,19 +68,15 @@ function App() {
     	</header>
 
 	    <section className="main">
-		    <input className="toggle-all" type="checkbox" />
-		    <label htmlFor="toggle-all" onClick={()=>{
-            setListe(
-              liste.map(el => !el.tamamlandi ? {...el, tamamlandi: !el.tamamlandi} : el
-             
-          ))}}>
+		    <input className="toggle-all" type="checkbox"  />
+		    <label htmlFor="toggle-all" onClick={()=>toggleAll()} checked={checkAll}>
 			  Mark all as complete
 		    </label>
 		    <ul className="todo-list">
           {filteredData.map(item=>(
-            <li className={item.tamamlandi ? 'completed' : ""} key={item.id}>
+            <li className={item.tamamlandi ? 'completed' : ""} key={item.id} htmlFor={item.id}>
               <div className="view" >
-                <input className="toggle" type="checkbox" onClick={()=> {click(item.id)}} />
+                <input id={item.id} className="toggle" id={item.id}type="checkbox" onClick={()=> {click(item.id)}} checked={item.tamamlandi} />
 					      <label>{item.baslik}</label>
 					      <button className="destroy" onClick={(e)=> {
                   setListe(liste.filter(el=> el.id !==item.id ))} }/>
